@@ -62,6 +62,7 @@ def build() -> nbf.NotebookNode:
     cells.append(md("## Section 1 — 데이터 로딩 & 기본 통계"))
 
     cells.append(code(
+        "%matplotlib inline\n"
         "import warnings\n"
         "from pathlib import Path\n"
         "\n"
