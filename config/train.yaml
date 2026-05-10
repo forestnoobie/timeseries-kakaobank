@@ -1,0 +1,90 @@
+# 학습 파이프라인 설정 — CLAUDE.md §5 STEP 4·5 기반
+# 모든 의사결정은 EDA 결과(H1~H9) 근거.
+
+seed: 42
+
+paths:
+  raw_csv: data/raw/dataset.csv
+  preprocessed_csv: data/data_preprocessed.csv
+  models_dir: outputs/models
+  predictions_dir: outputs/predictions
+  metrics_path: outputs/predictions/metrics.csv
+  feature_importance_path: outputs/analytics/feature_importance.md
+  residuals_path: outputs/predictions/residuals.csv
+
+# 시간순 split (CLAUDE.md §5 STEP 4 — 사전등록·고정).
+# 결과 보고 재조정 금지(§5 STEP 4 + §9-1).
+split:
+  train_end: "2021-09-30"
+  val_end:   "2021-12-31"
+  # test = val_end 다음날부터 데이터 끝까지.
+
+preprocess:
+  # H6 채택 시 log1p (skew>1). 노트북에서 skew=+0.69 → 미달이지만 분산 안정화 목적으로 시도 가능.
+  # 두 옵션을 학습-비교 가능하도록 toggle.
+  log1p_target: false
+  # H9 결측 처리. 후보: linear / dow_mean / forward_fill.
+  missing_strategy: dow_mean
+  # H7 이상치. 후보: keep / winsorize / iqr_drop. 휴일/event 일자는 항상 보존.
+  outlier_strategy: keep
+  winsorize_quantiles: [0.001, 0.999]
+  # event 컬럼에 스펙 외 값(2)이 1건 존재 — 'event_flag = (event > 0)'로 정규화.
+  binarize_event: true
+
+features:
+  calendar: true              # H3 (요일 효과)
+  cyclic_encoding: true       # 선형 모델용 sin/cos
+  lags: [1, 7, 14, 28]        # H5 (lag-7 자기상관 강함)
+  rolling_windows: [7, 28]    # 단기 변동성
+  rolling_std_windows: [7]
+  interaction_holiday_dow: true  # H8
+
+cv:
+  # CLAUDE.md §5 STEP 4: TimeSeriesSplit(n_splits=5)
+  n_splits: 5
+
+# 학습 모델 목록. baselines는 항상 학습.
+models:
+  baselines:
+    naive_seasonal: true     # y(t-7)
+    group_mean: true         # (dow × holiday) 평균
+  ridge:
+    enabled: true
+    alpha: 1.0
+  lightgbm:
+    enabled: true
+    params:
+      objective: regression
+      metric: rmse
+      learning_rate: 0.05
+      n_estimators: 1000
+      num_leaves: 63
+      min_child_samples: 20
+      feature_fraction: 0.9
+      bagging_fraction: 0.9
+      bagging_freq: 5
+      lambda_l1: 0.0
+      lambda_l2: 0.0
+      verbose: -1
+    early_stopping_rounds: 50
+  xgboost:
+    enabled: true
+    params:
+      objective: reg:squarederror
+      eval_metric: rmse
+      learning_rate: 0.05
+      n_estimators: 1000
+      max_depth: 7
+      min_child_weight: 5
+      subsample: 0.9
+      colsample_bytree: 0.9
+      reg_alpha: 0.0
+      reg_lambda: 1.0
+      verbosity: 0
+    early_stopping_rounds: 50
+
+# 보고용 옵션
+reporting:
+  # vs Naive seasonal 개선율 계산 기준.
+  primary_baseline: naive_seasonal
+  primary_metric: rmse

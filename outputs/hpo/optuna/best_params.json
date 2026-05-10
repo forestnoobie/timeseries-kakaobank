@@ -1,0 +1,14 @@
+{
+  "best_rmse": 471.74396196705595,
+  "params": {
+    "learning_rate": 0.17015584223502284,
+    "num_leaves": 193,
+    "max_depth": 4,
+    "min_child_samples": 5,
+    "feature_fraction": 0.7707652333183406,
+    "bagging_fraction": 0.5648503914334693,
+    "bagging_freq": 1,
+    "lambda_l1": 0.008504501755248181,
+    "lambda_l2": 0.05986060567937852
+  }
+}

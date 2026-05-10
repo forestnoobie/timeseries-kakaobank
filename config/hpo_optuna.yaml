@@ -1,0 +1,17 @@
+# Optuna HPO 설정 — CLAUDE.md §5-5
+# 비교군. 동일 cv_objective + 동일 예산.
+
+seed: 42
+target_model: lightgbm
+
+optuna:
+  n_trials: 100               # TuRBO max_evals와 동일 (공정 비교)
+  sampler: tpe                # TPESampler
+  pruner: median              # MedianPruner
+  storage_path: outputs/hpo/optuna/study.db   # sqlite 영속화
+  study_name: lgbm_hpo
+
+output:
+  trials_csv: outputs/hpo/optuna/trials.csv
+  best_params_json: outputs/hpo/optuna/best_params.json
+  convergence_png: outputs/hpo/optuna/convergence.png

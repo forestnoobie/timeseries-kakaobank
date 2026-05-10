@@ -1,0 +1,13 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+.ipynb_checkpoints
+.venv
+venv
+.env
+*.log
+outputs/models/*
+outputs/hpo/*
+outputs/predictions/*
+!outputs/analytics

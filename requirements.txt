@@ -1,0 +1,36 @@
+# EDA + 모델링 공통 의존성 (CLAUDE.md §5 STEP 7 기반)
+# 핀 정책: 메이저 호환성만 고정 (재현성은 seed로 확보)
+
+# Core
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+pyyaml==6.0.2
+
+# Stats / Time-series EDA
+statsmodels==0.14.2
+
+# Visualization
+matplotlib==3.9.2
+seaborn==0.13.2
+
+# Notebook execution (run_eda.sh가 nbconvert로 실행)
+jupyter==1.1.1
+ipykernel==6.29.5
+nbformat==5.10.4
+nbconvert==7.16.4
+
+# ML — 후속 STEP에서 사용 (EDA만 돌릴 땐 불필요하지만 단일 이미지로 통일)
+scikit-learn==1.5.2
+lightgbm==4.5.0
+xgboost==2.1.1
+shap==0.46.0
+
+# HPO
+optuna==3.6.1
+# torch / gpytorch는 TuRBO에 필요. CPU only.
+torch==2.4.1
+gpytorch==1.12
+
+# TuRBO (uber-research, Non-Commercial 라이선스)
+# Dockerfile에서 별도 설치: pip install git+https://github.com/uber-research/TuRBO.git

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# 학습 산출물 — 재실행 가능한 결과물은 커밋 대상에서 제외
+data/data_preprocessed.csv
+outputs/models/*.pkl
+outputs/hpo/optuna/study.db
+outputs/hpo/optuna/study_smoke.db
+
+# 컴파일된 wheel / 캐시
+*.whl
+*.tar.gz
+build/
+dist/
+
+# 환경 설정 누출 방지
+*.local.yaml
+secrets/

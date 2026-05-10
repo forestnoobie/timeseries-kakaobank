@@ -1,0 +1,22 @@
+# TuRBO HPO 설정 — CLAUDE.md §5-4
+# Uber-Research/TuRBO (NeurIPS 2019). Uber Non-Commercial 라이선스.
+
+seed: 42
+
+# 공통 cv_objective 호출 (Optuna와 동일) — 공정 비교 보장.
+target_model: lightgbm
+
+# n_init >= 2d 권장 (CLAUDE.md §5-4). 9개 차원이므로 20.
+turbo:
+  n_init: 20
+  max_evals: 100
+  batch_size: 5
+  use_ard: true
+  device: cpu
+  dtype: float64
+
+# 산출물
+output:
+  trials_csv: outputs/hpo/turbo/trials.csv
+  best_params_json: outputs/hpo/turbo/best_params.json
+  convergence_png: outputs/hpo/turbo/convergence.png
