@@ -1,14 +1,14 @@
 {
-  "best_rmse": 471.74396196705595,
+  "best_rmse": 471.2485801423204,
   "params": {
-    "learning_rate": 0.17015584223502284,
-    "num_leaves": 193,
+    "learning_rate": 0.1278257054128034,
+    "num_leaves": 195,
     "max_depth": 4,
-    "min_child_samples": 5,
-    "feature_fraction": 0.7707652333183406,
-    "bagging_fraction": 0.5648503914334693,
+    "min_child_samples": 25,
+    "feature_fraction": 0.944637007405818,
+    "bagging_fraction": 0.529980591136961,
     "bagging_freq": 1,
-    "lambda_l1": 0.008504501755248181,
-    "lambda_l2": 0.05986060567937852
+    "lambda_l1": 0.0003839698658641854,
+    "lambda_l2": 0.04323678460172011
   }
 }
